@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 const Alien = require("../models/publicgri");
 const multer = require('multer');
 
@@ -24,7 +23,8 @@ var upload = multer({
   storage: storage,
   limits: {
     fileSize: 1024 * 1024 * 5
-  }
+  },
+  fileFilter: fileFilter
 })
 
 
@@ -38,7 +38,8 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post("/", upload.array('images', 12), async (req, res) => {
+router.post("/", upload.array('image', 12), async (req, res) => {
+  console.log(req.body);
   const { Name, Mobileno, Email, Pincode, Department, Locality, Siteaddress, Complaintaddress, Reasontocontribute } = req.body;
   let arr = [];
   req.files.map(f => arr.push(f.path));
@@ -54,12 +55,12 @@ router.post("/", upload.array('images', 12), async (req, res) => {
     reasontocontribute: Reasontocontribute,
     images: arr
   });
-  try {
+  //try {
     const a1 = await alien.save();
     return res.status(200).send(a1)
-  } catch (err) {
+  //} catch (err) {
     return res.status(500).send({ err, "msg": "Something went wrong" })
-  }
+  //}
 });
 
 

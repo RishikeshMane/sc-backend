@@ -20,7 +20,6 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
-
 var upload = multer({
   storage: storage,
   limits: {
@@ -28,7 +27,6 @@ var upload = multer({
   },
   fileFilter: fileFilter
 });
-
 
 router.get("/", async (req, res) => {
   try {
@@ -41,9 +39,11 @@ router.get("/", async (req, res) => {
 });
 
 
-router.post('/', async (req, res) => {
-  console.log(req.body);
+router.post('/', upload.single('image'), async (req, res) => {
   console.log('req vol');
+  // console.log(req.body);
+  console.log("file",req.file);
+  console.log(req.image);
   const { Name, Number1, Number2, Email, Address, City, State, Zipcode, Qualification, Profession, Facebooklink, Twitterlink, Instagramlink, Reasontocontribute, Hours, Days } = req.body;
  // try {
     const volset = new vol({
@@ -65,14 +65,17 @@ router.post('/', async (req, res) => {
       days: Days,
       image: req.file.path
     });
-    const a1 = await volset.save();
-    console.log(a1)
+    
+    try {
+      const a1 = await volset.save();
+    // console.log(a1)
     return res.status(200).send(a1)
-  //} catch (err) {
-  //  return res.status(500).send({ err, msg: "something went wrong " })
-  //}
+    } catch (error) {
+      console.log(error);
+         return res.status(500).send({ err, msg: "something went wrong " })
+    }
 
-})
+});
 
 
 module.exports = router;

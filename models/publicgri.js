@@ -28,7 +28,7 @@ const alienSchema = new mongoose.Schema({
   reasontocontribute: {
     type: String
   },
-  images: []
+  images:[]
 });
 
 module.exports = mongoose.model("publicgri", alienSchema);
