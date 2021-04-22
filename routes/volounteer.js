@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const vol = require("../models/volounteer");
 const multer = require('multer');
+var nodemailer = require('nodemailer');
 const path = require('path')
 
 var storage = multer.diskStorage({
@@ -65,6 +66,34 @@ router.post('/', upload.single('image'), async (req, res) => {
       days: Days,
       image: req.file.path
     });
+
+    //send email
+
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'rexspecsadam007@gmail.com',
+        pass: '@#$Amsterdam1234'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'rexspecsadam007@gmail.com',
+      to: 'geeksforrex@gmail.com',
+      subject: 'Sending Email using Node.js',
+      text: `Hi Smartherd, thank you for your nice Node.js tutorials.
+              I will donate 50$ for this course. Please send me payment options.`
+      // html: '<h1>Hi Smartherd</h1><p>Your Messsage</p>'        
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    
     
     try {
       const a1 = await volset.save();
@@ -74,6 +103,10 @@ router.post('/', upload.single('image'), async (req, res) => {
       console.log(error);
          return res.status(500).send({ err, msg: "something went wrong " })
     }
+
+
+
+    
 
 });
 
