@@ -72,8 +72,8 @@ router.post('/', upload.single('image'), async (req, res) => {
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'rexspecsadam007@gmail.com',
-        pass: '@#$Amsterdam1234'
+        user: '',
+        pass: ''
       }
     });
     
