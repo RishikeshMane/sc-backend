@@ -68,18 +68,18 @@ router.post('/', upload.single('image'), async (req, res) => {
     });
 
     //send email
-
+    //changes to make
     var transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'rexspecsadam007@gmail.com',
-        pass: '@#$Amsterdam1234'
+        user: '',
+        pass: ''
       }
     });
     
     var mailOptions = {
-      from: 'rexspecsadam007@gmail.com',
-      to: 'geeksforrex@gmail.com',
+      from: '',
+      to: '',
       subject: 'Sending Email using Node.js',
       text: `Hi Smartherd, thank you for your nice Node.js tutorials.
               I will donate 50$ for this course. Please send me payment options.`
